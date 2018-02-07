@@ -1,6 +1,9 @@
 //var csvPath = WScript.arguments(0);
 //var filePath = WScript.arguments(1);
 
+js = (new ActiveXObject("Scripting.FileSystemObject")).OpenTextFile("blacklist.js", 1).ReadAll();
+eval(js);
+
 function fuzzySearch(token, csvPath, filePath) {
 
 	postDataJs = (new ActiveXObject("Scripting.FileSystemObject")).OpenTextFile("util.js", 1).ReadAll();
@@ -25,7 +28,8 @@ function fuzzySearch(token, csvPath, filePath) {
 	var text = file.ReadAll();
 	file.close();
 
-	var matches = [];
+	var softMatches = [];
+	var hardMatches = [];
 	var line;
 	var patient;
 	while(!is.AtEndOfStream) {
@@ -58,6 +62,9 @@ function fuzzySearch(token, csvPath, filePath) {
 				
 				var lastNameIndex = matchName(patient.lastName.toLowerCase(), nameText);
 				if (lastNameIndex != -1) {
+					if (canBeSoftMatch(patient) && !isBlacklisted(patient)) {
+						softMatches.push(patient);
+					}
 					while (true) {
 						var yearIndex = textCopy.indexOf(patient.year1);
 						if (yearIndex == -1) {
@@ -99,9 +106,9 @@ function fuzzySearch(token, csvPath, filePath) {
 						var day2Index = dateText.indexOf(patient.day2);
 
 						if (day1Index != -1 || day2Index != -1) {
-							if (!(patient.firstName == "Maryam" && patient.lastName == "Rahnemun") && !(patient.firstName == "Ali" && patient.lastName == "Ali") && !(patient.firstName == "Sung Un" && patient.lastName == "Yi")) {
+							if (!isBlacklisted(patient)) {
 								WScript.Echo("Matched " + patient.firstName + " " + patient.lastName + " " + patient.id + " with birthday ****************************************************************************!");
-								matches.push(patient);
+								hardMatches.push(patient);
 								break;
 							}
 						}
@@ -113,11 +120,47 @@ function fuzzySearch(token, csvPath, filePath) {
 		}
 	}
 	is.Close();
-	return matches;
+	if (hardMatches.length == 0) {
+		return softMatches;
+	} else {
+		return hardMatches;
+	}
+}
+
+function canBeSoftMatch(patient) {
+	name = getMatchingNames(patient.firstName).join("")
+	name += getMatchingNames(patient.lastName).join("")
+	WScript.Echo("Patient = " + patient.firstName + " " + patient.lastName);
+	if (name.length > 7) {
+		WScript.Echo("can be Soft match!");
+		return true;
+	}
+	else {
+		WScript.Echo("can't be soft match!");
+		return false;
+	}
+}
+
+function getMatchingNames(name) {
+	var unfilteredNames = name.split(" ");
+	var names = []
+	if (unfilteredNames.length > 1 && unfilteredNames.sort(function (a, b) { return b.length - a.length; })[0].length > 2) {
+		for (var i = 0; i < unfilteredNames.length; i++) {
+			if (unfilteredNames[i].length > 2) {
+				names.push(unfilteredNames[i]);
+			}
+		}
+	} else {
+		names = unfilteredNames;
+	}
+
+	return names;
 }
 
 function matchName(name, text) {
-	var names = name.split(" ");
+
+	var names = getMatchingNames(name);
+
 	var hasMatch = false;
 	var indices = [];
 	var index;

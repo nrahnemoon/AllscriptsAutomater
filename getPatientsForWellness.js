@@ -1,10 +1,28 @@
 /* Usage
- * cscript getPatientsForWellness.js {csvPath} {csvOutputPath} {token}
+ * cscript getPatientsForWellness.js {csvPath} {csvOutputPath} {username} {password}
  */
-var csvPath = WScript.arguments(0);
-var csvOutputPath = WScript.arguments(1);
-var token = WScript.arguments(2);
-//function getPatientsForWellness(token, csvPath) {
+
+if (WScript.arguments.length > 0) {
+
+	var csvPath = WScript.arguments(0);
+	var csvOutputPath = WScript.arguments(1);
+	var username = WScript.arguments(2);
+	var password = WScript.arguments(3);
+
+	js = (new ActiveXObject("Scripting.FileSystemObject")).OpenTextFile("getToken.js", 1).ReadAll();
+	eval(js);
+
+	var token = getToken(username, password);
+
+	js = (new ActiveXObject("Scripting.FileSystemObject")).OpenTextFile("getPatients.js", 1).ReadAll();
+	eval(js);
+
+	getPatients(token, csvPath);
+
+	getPatientsForWellness(token, csvPath, csvOutputPath);
+}
+
+function getPatientsForWellness(token, csvPath, csvOutputPath) {
 
 	postDataJs = (new ActiveXObject("Scripting.FileSystemObject")).OpenTextFile("util.js", 1).ReadAll();
 	eval(postDataJs);
@@ -64,4 +82,4 @@ var token = WScript.arguments(2);
 	}
 	fhOutput.close();
 	is.Close();
-// }
+}

@@ -1,21 +1,4 @@
-
 var categories = [];
-
-var currCategory = {};
-currCategory.key = "Authorizations";
-currCategory.id = -20;
-currCategory.values = [
-	"Referral Status Form",
-	"Letter of Referral",
-	"Notice of Action",
-	"Authorization Date/Number",
-	"Provider Authorization Notification",
-	"Notice Of Authorization Of Services",
-	"Notification Of Approval",
-	"Form to File a State Hearing",
-	"Notice Of Authorization Of Services"
-];
-categories.push(currCategory);
 
 var currCategory = {};
 currCategory.key = "Pathology";
@@ -46,6 +29,14 @@ currCategory.key = "Demographics";
 currCategory.id = -24;
 currCategory.values = [
 	"As a primary care physician I can take care of your entire"
+];
+categories.push(currCategory);
+
+var currCategory = {};
+currCategory.key = "Hospital Report";
+currCategory.id = -31;
+currCategory.values = [
+	"Hospital"
 ];
 categories.push(currCategory);
 
@@ -109,7 +100,6 @@ currCategory.values = [
 	"CVS Pharmacy",
 	"Prescription Refill",
 	"Refill Authorization",
-	"Authorization Request",
 	"Savon Pharmacy",
 	"Plus Pharmacy",
 	"New Prescription",
@@ -126,6 +116,22 @@ currCategory.values = [
 	"Medical Arts Pharmacy",
 	"Prescription Request",
 	"Request For Authorization"
+];
+categories.push(currCategory);
+
+var currCategory = {};
+currCategory.key = "Authorizations";
+currCategory.id = -20;
+currCategory.values = [
+	"Referral Status Form",
+	"Letter of Referral",
+	"Notice of Action",
+	"Authorization Date/Number",
+	"Provider Authorization Notification",
+	"Notice Of Authorization Of Services",
+	"Notification Of Approval",
+	"Form to File a State Hearing",
+	"Notice Of Authorization Of Services"
 ];
 categories.push(currCategory);
 
@@ -152,14 +158,6 @@ currCategory.values = [
 categories.push(currCategory);
 
 var currCategory = {};
-currCategory.key = "Hospital";
-currCategory.id = -31;
-currCategory.values = [
-	"Hospital"
-];
-categories.push(currCategory);
-
-var currCategory = {};
 currCategory.key = "PHQ-9 Patient Depression Questioner";
 currCategory.id = -106;
 currCategory.values = [
@@ -179,3 +177,23 @@ categories.push(currCategory);
 var defaultCategory = {};
 defaultCategory.key = "Medical Report";
 defaultCategory.id = -36;
+
+function getCategory(filePath) {
+
+	var fso = new ActiveXObject("Scripting.FileSystemObject");
+	var forReading = 1;
+	var file = fso.OpenTextFile(filePath, forReading, false, 0);
+	var text = file.ReadAll();
+	file.close();
+
+	for (var i = 0; i < categories.length; i++) {
+		for (var j = 0; j < categories[i].values.length; j++) {
+			if (hasMatch(categories[i].values[j], text)) {
+				WScript.echo("Matched " + categories[i].values[j] + " for " + categories[i].key);
+				return categories[i];
+			}
+		}
+	}
+
+	return defaultCategory;
+}

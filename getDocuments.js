@@ -1,71 +1,87 @@
 /* Usage
  * cscript getDocuments.js {patientID} {docDir}
  */
-var patientID = WScript.arguments(0);
-var docDir = WScript.arguments(1);
 
-postDataJs = (new ActiveXObject("Scripting.FileSystemObject")).OpenTextFile("util.js", 1).ReadAll();
-eval(postDataJs);
+if (WScript.arguments.length > 0) {
 
-var url = "https://prowand.allscriptscloud.com:5006/UnityService.svc/json/MagicJson";
-var data = "{\"Action\":\"GetDocuments\",";
-data += "\"AppUserID\":\"jeff.paarsa\",";
-data += "\"Appname\":\"RemotePlusPro\",";
-data += "\"PatientID\":\"" + patientID + "\",";
-data += "\"Token\":\"" + "E62D99C7-014C-4E97-AD8C-AF3C5141598C" + "\",";
-data += "\"Parameter1\":\"\",\"Parameter2\":\"\",";
-data += "\"Parameter3\":\"\",\"Parameter4\":\"\",";
-data += "\"Parameter5\":\"\",\"Parameter6\":\"\",";
-data += "\"Data\":\"\"}";
+	var patientID = WScript.arguments(0);
+	var docDir = WScript.arguments(1);
+	var username = WScript.arguments(2);
+	var password = WScript.arguments(3);
 
-var request = postData(url, data, "getting the patient documents");
+	js = (new ActiveXObject("Scripting.FileSystemObject")).OpenTextFile("getToken.js", 1).ReadAll();
+	eval(js);
 
-if (request.status != 200)
-	throw "";
+	var token = getToken(username, password);
 
-eval('jsonResponse = ' + request.responseText);
-var docs = jsonResponse[0].getdocumentsinfo;
+	getDocuments(patientID, docDir, token)
+}
 
-var patientFolder = docDir + "\\" + patientID;
-createFolder(patientFolder);
+function getDocuments(patientID, docDir, token) {
 
-for (var i = 0; i < docs.length; i++) {
-	
-	WScript.echo(docs[i].DocumentID + " " + docs[i].FormatType + " " + docs[i].DocumentType);
-	
+	postDataJs = (new ActiveXObject("Scripting.FileSystemObject")).OpenTextFile("util.js", 1).ReadAll();
+	eval(postDataJs);
+
 	var url = "https://prowand.allscriptscloud.com:5006/UnityService.svc/json/MagicJson";
 	var data = "{\"Action\":\"GetDocuments\",";
 	data += "\"AppUserID\":\"jeff.paarsa\",";
 	data += "\"Appname\":\"RemotePlusPro\",";
 	data += "\"PatientID\":\"" + patientID + "\",";
-	data += "\"Token\":\"" + "E62D99C7-014C-4E97-AD8C-AF3C5141598C" + "\",";
+	data += "\"Token\":\"" + token + "\",";
 	data += "\"Parameter1\":\"\",\"Parameter2\":\"\",";
-	data += "\"Parameter3\":\"" + docs[i].DocumentID + "\",";
-	data += "\"Parameter4\":\"" + docs[i].DocumentType + "\",";
+	data += "\"Parameter3\":\"\",\"Parameter4\":\"\",";
 	data += "\"Parameter5\":\"\",\"Parameter6\":\"\",";
 	data += "\"Data\":\"\"}";
 
-	var request = postData(url, data, "getting the patient doc " + docs[i].DocumentID + "." + docs[i].FormatType);
+	var request = postData(url, data, "getting the patient documents");
 
 	if (request.status != 200)
 		throw "";
 
 	eval('jsonResponse = ' + request.responseText);
-	
-	var filename = patientFolder + "\\" + docs[i].DocumentID + "-" + docs[i].DocumentType + "." + docs[i].FormatType;
-	var formatType = docs[i].FormatType;
+	var docs = jsonResponse[0].getdocumentsinfo;
 
-	if (formatType.toUpperCase() == "TIFF")
-		continue;
-	if (jsonResponse.length == 0 || !jsonResponse[0].hasOwnProperty("getdocumentsinfo") || jsonResponse[0].getdocumentsinfo.length == 0 || !jsonResponse[0].getdocumentsinfo[0].hasOwnProperty("PageContents"))
-		continue;
+	var patientFolder = docDir + "\\" + patientID;
+	createFolder(patientFolder);
 
-	var text = jsonResponse[0].getdocumentsinfo[0].PageContents;
-	if (formatType && (formatType.toUpperCase() == "JPG" || formatType.toUpperCase() == "BIN" || formatType.toUpperCase() == "PDF")) {
-		var base64Data = text;
-		base64ToBinary(base64Data, filename, docs[i].FormatType);
-	} else {
-		saveToFile(text, filename);
+	for (var i = 0; i < docs.length; i++) {
+		
+		WScript.echo(docs[i].DocumentID + " " + docs[i].FormatType + " " + docs[i].DocumentType);
+		
+		var url = "https://prowand.allscriptscloud.com:5006/UnityService.svc/json/MagicJson";
+		var data = "{\"Action\":\"GetDocuments\",";
+		data += "\"AppUserID\":\"jeff.paarsa\",";
+		data += "\"Appname\":\"RemotePlusPro\",";
+		data += "\"PatientID\":\"" + patientID + "\",";
+		data += "\"Token\":\"" + "E62D99C7-014C-4E97-AD8C-AF3C5141598C" + "\",";
+		data += "\"Parameter1\":\"\",\"Parameter2\":\"\",";
+		data += "\"Parameter3\":\"" + docs[i].DocumentID + "\",";
+		data += "\"Parameter4\":\"" + docs[i].DocumentType + "\",";
+		data += "\"Parameter5\":\"\",\"Parameter6\":\"\",";
+		data += "\"Data\":\"\"}";
+
+		var request = postData(url, data, "getting the patient doc " + docs[i].DocumentID + "." + docs[i].FormatType);
+
+		if (request.status != 200)
+			throw "";
+
+		eval('jsonResponse = ' + request.responseText);
+		
+		var filename = patientFolder + "\\" + docs[i].DocumentID + "-" + docs[i].DocumentType + "." + docs[i].FormatType;
+		var formatType = docs[i].FormatType;
+
+		if (formatType.toUpperCase() == "TIFF")
+			continue;
+		if (jsonResponse.length == 0 || !jsonResponse[0].hasOwnProperty("getdocumentsinfo") || jsonResponse[0].getdocumentsinfo.length == 0 || !jsonResponse[0].getdocumentsinfo[0].hasOwnProperty("PageContents"))
+			continue;
+
+		var text = jsonResponse[0].getdocumentsinfo[0].PageContents;
+		if (formatType && (formatType.toUpperCase() == "JPG" || formatType.toUpperCase() == "BIN" || formatType.toUpperCase() == "PDF")) {
+			var base64Data = text;
+			base64ToBinary(base64Data, filename, docs[i].FormatType);
+		} else {
+			saveToFile(text, filename);
+		}
 	}
 }
 

@@ -37,11 +37,16 @@ WScript.Echo("Processing files.");
 for(var objEnum = new Enumerator(fileCollection); !objEnum.atEnd(); objEnum.moveNext()) {
 
 	var txtFileName = String(objEnum.item());
-	var extension = txtFileName.split(".")[1].toLowerCase();
-	var fileName = txtFileName.split("\\")[txtFileName.split("\\").length - 1].split(".")[0];
+	var fileSplit = txtFileName.split(".");
+	var extension = fileSplit[fileSplit.length - 1].toLowerCase();
+	fileSplit = txtFileName.split("\\")[txtFileName.split("\\").length - 1].split(".");
+	fileSplit.splice(-1, 1);
+	var fileName = fileSplit.join(".");
 
 	if (extension == "txt") {
-		var pdfFileName = txtFileName.split(".")[0] + ".pdf";
+		fileSplit = txtFileName.split(".");
+		fileSplit.splice(-1, 1);
+		var pdfFileName = fileSplit.join(".") + ".pdf";
 
 		WScript.Echo("In processFile to process " + pdfFileName);
 		js = (new ActiveXObject("Scripting.FileSystemObject")).OpenTextFile("fuzzySearch.js", 1).ReadAll();
@@ -52,11 +57,14 @@ for(var objEnum = new Enumerator(fileCollection); !objEnum.atEnd(); objEnum.move
 		WScript.echo("Num matches = " + matches.length);
 
 		if (matches.length == 1) {
-			WScript.echo("Uploading " + pdfFileName + " for " + matches[0].firstName + " " + matches[0].lastName + " with category " + getCategory(txtFileName));
-			// uploadPdf(filename, matches[0].id, "This is just a test", 1, token)
-			// WScript.echo("Uploading to " + uploadedFolder + "\\" + fileName + ".txt");
-			fso.MoveFile(txtFileName, uploadedFolder + "\\" + fileName + ".txt") ;
-			fso.MoveFile(pdfFileName, uploadedFolder + "\\" + fileName + ".pdf");
+			category = getCategory(txtFileName);
+			WScript.echo("Uploading " + pdfFileName + " for " + matches[0].firstName + " " + matches[0].lastName + " with category " + category.key + " (" + category.id + ")");
+			var subject = "[" + matches[0].firstName + " " + matches[0].lastName + "] " + category.key + " " + (new Date()).getTime();
+			// uploadPdf(filename, matches[0].id, subject, category.id, token)
+
+			var newFileName = matches[0].firstName + "_" + matches[0].lastName + "_" + matches[0].id + "(" + matches[0].month2 + "-" + matches[0].day2 + "-" + matches[0].year1 + ")(" + category.key + "_" + category.id + ")(" + (new Date()).getTime() + ")";
+			fso.MoveFile(txtFileName, uploadedFolder + "\\" + newFileName + ".txt") ;
+			fso.MoveFile(pdfFileName, uploadedFolder + "\\" + newFileName + ".pdf");
 		} else if (matches.length == 0) {
 			WScript.echo(matches.length + " matches.  Won't upload.");
 			fso.MoveFile(txtFileName, noMatchFolder + "\\" + fileName + ".txt");
@@ -67,23 +75,4 @@ for(var objEnum = new Enumerator(fileCollection); !objEnum.atEnd(); objEnum.move
 			fso.MoveFile(pdfFileName, multipleMatchFolder + "\\" + fileName + ".pdf");
 		}
 	}
-}
-
-function getCategory(filePath) {
-
-	var fso = new ActiveXObject("Scripting.FileSystemObject");
-	var forReading = 1;
-	var file = fso.OpenTextFile(filePath, forReading, false, 0);
-	var text = file.ReadAll();
-	file.close();
-
-	for (var i = 0; i < categories.length; i++) {
-		for (var j = 0; j < categories[i].values.length; j++) {
-			if (hasMatch(categories[i].values[j], text)) {
-				return categories[i].id;
-			}
-		}
-	}
-
-	return defaultCategory.id;
 }

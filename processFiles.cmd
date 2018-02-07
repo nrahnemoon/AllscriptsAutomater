@@ -1,8 +1,8 @@
 @echo off
 setlocal enabledelayedexpansion
 
-set username="jeff.paarsa"
-set password="INSERT_PASSWORD_HERE"
+call authenticationInfo.cmd
+
 ::set mainFolder=C:\Users\JeffB\Desktop\AllscriptsAutomater
 set mainFolder=C:\Users\nrahn\Desktop\AllscriptsAutomater
 set patientCSV=%mainFolder%\PatientDocs\patients.csv

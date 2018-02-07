@@ -1,7 +1,20 @@
 /* Usage
- * cscript getPatients.js {csvPath}
+ * cscript getPatients.js "getPatients" {csvPath} {username} {password}
  */
-// var csvPath = WScript.arguments(0);
+
+if (WScript.arguments.length > 0 && WScript.arguments(0) == "getPatients") {
+
+	var csvPath = WScript.arguments(1);
+	var username = WScript.arguments(2);
+	var password = WScript.arguments(3);
+
+	js = (new ActiveXObject("Scripting.FileSystemObject")).OpenTextFile("getToken.js", 1).ReadAll();
+	eval(js);
+
+	var token = getToken(username, password);
+
+	getPatients(token, csvPath);
+}
 
 function getPatients(token, csvPath) {
 
@@ -64,9 +77,9 @@ function getPatients(token, csvPath) {
 		day = parseInt(dateArr[0], 10);
 		month = date.getMonth() + 1;
 		year = date.getFullYear();
-		WScript.Echo("Writing = " + lastPatientID + " " + patientInfo.Firstname + " " + patientInfo.LastName + " " + day + " " + month + " " + year + " " + patientInfo.dateofbirth);
+		WScript.Echo("Writing = " + lastPatientID + " " + formatName(patientInfo.Firstname) + " " + formatName(patientInfo.LastName) + " " + day + " " + month + " " + year + " " + patientInfo.dateofbirth);
 
-		fh.WriteLine(lastPatientID + "," + patientInfo.Firstname + "," + patientInfo.LastName + "," + day + "," + month + "," + year);
+		fh.WriteLine(lastPatientID + "," + formatName(patientInfo.Firstname) + "," + formatName(patientInfo.LastName) + "," + day + "," + month + "," + year + "," + patientInfo.PhoneNumber + "," + patientInfo.Email);
 		numBadInRow = 0;
 		lastPatientID++;
 	}

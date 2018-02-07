@@ -1,7 +1,7 @@
 @echo off
 
-set username="jeff.paarsa"
-set password="INSERT_PASSWORD_HERE"
+call authenticationInfo.cmd
+
 set patientCSV=C:\Users\JeffB\Desktop\AllscriptsAutomater\PatientDocs\patients.csv
 set toProcessFolder=C:\Users\JeffB\Desktop\AllscriptsAutomater\PatientDocs\*.*
 

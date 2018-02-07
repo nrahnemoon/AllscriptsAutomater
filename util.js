@@ -61,9 +61,17 @@ function hasMatch(query, text) {
 				matchNum++;
 			}
 		}
-
 		if (matchNum/queries.length >= 0.8)
 			return true;
 	}
 	return false;
+}
+
+function formatName(name) {
+	names = name.split(" ");
+	formattedNames = [];
+	for (var i = 0; i < names.length; i++) {
+		formattedNames.push(names[i].charAt(0).toUpperCase() + names[i].slice(1).toLowerCase());
+	}
+    return formattedNames.join(" ");
 }
