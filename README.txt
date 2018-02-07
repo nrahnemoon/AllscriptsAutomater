@@ -1,3 +1,5 @@
+Installation
+
 1. Download and install tesseract (OCR) from https://github.com/UB-Mannheim/tesseract/wiki
 2. Add tessearct to environment variables path
 	2a. From the Windows search, search for "environment variables"
@@ -11,4 +13,9 @@
 	3a. Make sure "Add to system path" is checked during install
 	3b. Make sure "Install legacy utilities" is checked during installation
 4. Download and install ghostscript from https://www.ghostscript.com/download/gsdnld.html (it's the Ghostscript AGPL License for x64)
+
+
+To Run:
+
+1. Make sure the patients.csv file is not open.  If it is, the program won't be able to read it.
 

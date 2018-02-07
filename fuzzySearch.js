@@ -2,20 +2,21 @@
 //var filePath = WScript.arguments(1);
 
 function fuzzySearch(token, csvPath, filePath) {
+
 	postDataJs = (new ActiveXObject("Scripting.FileSystemObject")).OpenTextFile("util.js", 1).ReadAll();
 	eval(postDataJs);
-	fuseJs = (new ActiveXObject("Scripting.FileSystemObject")).OpenTextFile("fuse.js", 1).ReadAll();
-	eval(fuseJs);
 
 	var fh;
 	var fso  = new ActiveXObject("Scripting.FileSystemObject");
 
+	// Loads csv and gets handles to csv file
 	if (!fileExists(csvPath))
 		throw "";
 
 	fh = fso.GetFile(csvPath);
 	is = fh.OpenAsTextStream(1, 0);
 
+	// Reads filePath
 	var text = "";
 
 	var fso = new ActiveXObject("Scripting.FileSystemObject");
@@ -43,16 +44,20 @@ function fuzzySearch(token, csvPath, filePath) {
 		patient.year1 = line[5];
 		patient.year2 = line[5].substring(2);
 		var textCopy = text.toLowerCase();
-		WScript.echo(textCopy);
+		// WScript.echo(textCopy);
 		while(true) {
-			var firstNameIndex = textCopy.indexOf(patient.firstName.toLowerCase());
+			var firstNameIndex = matchName(patient.firstName.toLowerCase(), textCopy);
 			if (firstNameIndex == -1) {
 				break;
 			} else {
 				textCopy = textCopy.substring(0, firstNameIndex) + textCopy.substring(firstNameIndex + patient.firstName.length);
-				var lastNameIndex = textCopy.indexOf(patient.lastName.toLowerCase());
-				var distance = 5 + patient.firstName.length + patient.lastName.length;
-				if (lastNameIndex != -1 && Math.abs(firstNameIndex - lastNameIndex) < distance) {
+				var startIndex = (firstNameIndex - patient.lastName.length - 5) < 0 ? 0 : (firstNameIndex  - patient.lastName.length - 5);
+				var endIndex = (firstNameIndex + patient.lastName.length + 5) > textCopy.length ? textCopy.length : (firstNameIndex + patient.lastName.length + 5);
+				var nameText = textCopy.substring(startIndex, endIndex).toLowerCase();
+
+				
+				var lastNameIndex = matchName(patient.lastName.toLowerCase(), nameText);
+				if (lastNameIndex != -1) {
 					while (true) {
 						var yearIndex = textCopy.indexOf(patient.year1);
 						if (yearIndex == -1) {
@@ -64,26 +69,28 @@ function fuzzySearch(token, csvPath, filePath) {
 						} else {
 							textCopy = textCopy.substring(0, yearIndex) + textCopy.substring(yearIndex + 4);
 						}
-						var startIndex = (yearIndex - 25) < 0 ? 0 : (yearIndex - 25) ;
-						var endIndex = (yearIndex + 25) > textCopy.length ? textCopy.length : (yearIndex + 25) ;
-						var dateText = textCopy.substring(startIndex, endIndex).toLowerCase();
-						// WScript.Echo("Matched year! " + yearIndex);
-						// WScript.Echo(dateText);
+						var shortStartIndex = (yearIndex - 6) < 0 ? 0 : (yearIndex - 6) ;
+						var shortEndIndex = (yearIndex + 6) > textCopy.length ? textCopy.length : (yearIndex + 6) ;
+						var longStartIndex = (yearIndex - 15) < 0 ? 0 : (yearIndex - 15) ;
+						var longEndIndex = (yearIndex + 15) > textCopy.length ? textCopy.length : (yearIndex + 15) ;
+						var shortDateText = textCopy.substring(shortStartIndex, shortEndIndex).toLowerCase();
+						var longDateText = textCopy.substring(longStartIndex, longEndIndex).toLowerCase();
+						var dateText = "";
 
 						// WScript.Echo(patient.month1 + " " + patient.month2 + " " + patient.month3 + " " + patient.month4);
-						var month1Index = dateText.indexOf(patient.month1);
-						var month2Index = dateText.indexOf(patient.month2);
-						var month3Index = dateText.indexOf(patient.month3.toLowerCase());
-						var month4Index = dateText.indexOf(patient.month4.toLowerCase());
+						var month1Index = shortDateText.indexOf(patient.month1);
+						var month2Index = shortDateText.indexOf(patient.month2);
+						var month3Index = longDateText.indexOf(patient.month3.toLowerCase());
+						var month4Index = longDateText.indexOf(patient.month4.toLowerCase());
 						// WScript.echo(month1Index  + " " + month2Index + " " + month3Index + " " + month4Index);
 						if (month4Index != -1)
-							dateText = dateText.substring(0, month4Index) + dateText.substring(month4Index + patient.month4.length);
+							dateText = longDateText.substring(0, month4Index) + longDateText.substring(month4Index + patient.month4.length);
 						else if (month3Index != -1)
-							dateText = dateText.substring(0, month3Index) + dateText.substring(month3Index + patient.month3.length);
+							dateText = longDateText.substring(0, month3Index) + longDateText.substring(month3Index + patient.month3.length);
 						else if (month2Index != -1)
-							dateText = dateText.substring(0, month2Index) + dateText.substring(month2Index + patient.month2.length);
+							dateText = shortDateText.substring(0, month2Index) + shortDateText.substring(month2Index + patient.month2.length);
 						else if (month1Index != -1)
-							dateText = dateText.substring(0, month1Index) + dateText.substring(month1Index + patient.month1.length);
+							dateText = shortDateText.substring(0, month1Index) + shortDateText.substring(month1Index + patient.month1.length);
 						else
 							continue;
 						// WScript.Echo("Month matched");
@@ -92,9 +99,11 @@ function fuzzySearch(token, csvPath, filePath) {
 						var day2Index = dateText.indexOf(patient.day2);
 
 						if (day1Index != -1 || day2Index != -1) {
-							WScript.Echo("Matched " + patient.firstName + " " + patient.lastName + " " + patient.id + " with birthday ****************************************************************************!");
-							matches.push(patient);
-							break;
+							if (!(patient.firstName == "Maryam" && patient.lastName == "Rahnemun") && !(patient.firstName == "Ali" && patient.lastName == "Ali") && !(patient.firstName == "Sung Un" && patient.lastName == "Yi")) {
+								WScript.Echo("Matched " + patient.firstName + " " + patient.lastName + " " + patient.id + " with birthday ****************************************************************************!");
+								matches.push(patient);
+								break;
+							}
 						}
 					}
 					// WScript.Echo("Matched " + patient.firstName + " " + patient.lastName);
@@ -105,6 +114,25 @@ function fuzzySearch(token, csvPath, filePath) {
 	}
 	is.Close();
 	return matches;
+}
+
+function matchName(name, text) {
+	var names = name.split(" ");
+	var hasMatch = false;
+	var indices = [];
+	var index;
+	for (var i = 0; i < names.length; i++) {
+		if (names[i].length <= 1)
+			continue;
+		index = text.indexOf(names[i]);
+		if (index != -1) {
+			hasMatch = true; 
+			indices.push(index);
+		}
+	}
+	if (hasMatch)
+		return Math.min.apply(null, indices);
+	return -1;
 }
 
 function getShortMonthName(monthNum) {

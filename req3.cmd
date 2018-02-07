@@ -1,9 +1,9 @@
 @echo off
 
 set username="jeff.paarsa"
-set password="[INSERT PASSWORD HERE]"
-set patientCSV="C:\\Users\\nrahn\\Desktop\\PatientDocs\\patients.csv"
-set toProcessFolder=C:\Users\nrahn\Desktop\PatientDocs\toProcess\*.*
+set password="INSERT_PASSWORD_HERE"
+set patientCSV=C:\Users\JeffB\Desktop\AllscriptsAutomater\PatientDocs\patients.csv
+set toProcessFolder=C:\Users\JeffB\Desktop\AllscriptsAutomater\PatientDocs\*.*
 
 cscript getPatients.js %patientCSV%
 

@@ -1,0 +1,558 @@
+[  
+   {  
+      "getdocumenttypeinfo":[  
+         {  
+            "DisplayName":"Adv. Dir., Sty. Hlty., Pt. Qus.",
+            "EntryCode":"-116",
+            "ID":"-116",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Advanced Directive",
+            "EntryCode":"-112",
+            "ID":"-112",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Advanced Directives",
+            "EntryCode":"31",
+            "ID":"31",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Anticoagulation Summary",
+            "EntryCode":"33",
+            "ID":"33",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Assessment",
+            "EntryCode":"101",
+            "ID":"101",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Authorizations",
+            "EntryCode":"-20",
+            "ID":"-20",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Auto Import",
+            "EntryCode":"27",
+            "ID":"27",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Care Plan",
+            "EntryCode":"37",
+            "ID":"37",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Combined Reports",
+            "EntryCode":"-87",
+            "ID":"-87",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Complaint Response",
+            "EntryCode":"-21",
+            "ID":"-21",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Confidential",
+            "EntryCode":"24",
+            "ID":"24",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Consent",
+            "EntryCode":"-22",
+            "ID":"-22",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Consultation Report",
+            "EntryCode":"1",
+            "ID":"1",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Correspondence",
+            "EntryCode":"-23",
+            "ID":"-23",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Demographics",
+            "EntryCode":"-24",
+            "ID":"-24",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Deposit",
+            "EntryCode":"-25",
+            "ID":"-25",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Diagnostic Imaging Report",
+            "EntryCode":"2",
+            "ID":"2",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Discharge Summary Report",
+            "EntryCode":"4",
+            "ID":"4",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"DMV Forms",
+            "EntryCode":"-105",
+            "ID":"-105",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Drivers License",
+            "EntryCode":"-26",
+            "ID":"-26",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"EDD Forms",
+            "EntryCode":"-111",
+            "ID":"-111",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"EKG",
+            "EntryCode":"-27",
+            "ID":"-27",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"email",
+            "EntryCode":"-28",
+            "ID":"-28",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Encounter Note",
+            "EntryCode":"36",
+            "ID":"36",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"ePHI Import",
+            "EntryCode":"26",
+            "ID":"26",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"FMH Form",
+            "EntryCode":"-82",
+            "ID":"-82",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"FMH Proxy Revocation",
+            "EntryCode":"-81",
+            "ID":"-81",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"FMH Release of Information",
+            "EntryCode":"-80",
+            "ID":"-80",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Generated Document",
+            "EntryCode":"-29",
+            "ID":"-29",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Growth Chart",
+            "EntryCode":"-30",
+            "ID":"-30",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Historical Summary",
+            "EntryCode":"23",
+            "ID":"23",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"History and Physical Report",
+            "EntryCode":"3",
+            "ID":"3",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Hospital",
+            "EntryCode":"-31",
+            "ID":"-31",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Hyperlipidemia Summary",
+            "EntryCode":"34",
+            "ID":"34",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Hypertension Summary",
+            "EntryCode":"35",
+            "ID":"35",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Insurance Card",
+            "EntryCode":"-32",
+            "ID":"-32",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Lab Results",
+            "EntryCode":"-33",
+            "ID":"-33",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Laboratory Report",
+            "EntryCode":"5",
+            "ID":"5",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Labs/Procedures",
+            "EntryCode":"100",
+            "ID":"100",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Letter received on Patient's Behalf",
+            "EntryCode":"7",
+            "ID":"7",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Letter sent on Patient's Behalf",
+            "EntryCode":"6",
+            "ID":"6",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Log",
+            "EntryCode":"-34",
+            "ID":"-34",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Mammogram",
+            "EntryCode":"-35",
+            "ID":"-35",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Medical Report",
+            "EntryCode":"-36",
+            "ID":"-36",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Medication List",
+            "EntryCode":"-37",
+            "ID":"-37",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Medication Management",
+            "EntryCode":"32",
+            "ID":"32",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Medication Refill",
+            "EntryCode":"-38",
+            "ID":"-38",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Misc",
+            "EntryCode":"-39",
+            "ID":"-39",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Neonatal Care Report",
+            "EntryCode":"38",
+            "ID":"38",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Non Clinical Data",
+            "EntryCode":"102",
+            "ID":"102",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Nurse's Note",
+            "EntryCode":"8",
+            "ID":"8",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Nutritionist's Note",
+            "EntryCode":"9",
+            "ID":"9",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Occupational Therapy Note",
+            "EntryCode":"10",
+            "ID":"10",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Other/Unknown",
+            "EntryCode":"0",
+            "ID":"0",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Past Chart Notes",
+            "EntryCode":"-40",
+            "ID":"-40",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Pathology",
+            "EntryCode":"-41",
+            "ID":"-41",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Pathology Report",
+            "EntryCode":"11",
+            "ID":"11",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Patient Health Survey",
+            "EntryCode":"12",
+            "ID":"12",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Patient Questioner",
+            "EntryCode":"-115",
+            "ID":"-115",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Phone Consultation",
+            "EntryCode":"25",
+            "ID":"25",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"PHQ-9 Patient Depression Questioner",
+            "EntryCode":"-106",
+            "ID":"-106",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Physical Therapy Note",
+            "EntryCode":"13",
+            "ID":"13",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Physiction Order",
+            "EntryCode":"-56",
+            "ID":"-56",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Picture or Diagram",
+            "EntryCode":"-42",
+            "ID":"-42",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"PreOp Report",
+            "EntryCode":"-43",
+            "ID":"-43",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Prescription",
+            "EntryCode":"-44",
+            "ID":"-44",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Problem List",
+            "EntryCode":"-45",
+            "ID":"-45",
+            "DocumentFormat":""
+         },
+         { 
+             "DisplayName":"Procedure/Op Note",
+            "EntryCode":"14",
+            "ID":"14",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Progress Note",
+            "EntryCode":"15",
+            "ID":"15",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Radiology",
+            "EntryCode":"-46",
+            "ID":"-46",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Referal",
+            "EntryCode":"-47",
+            "ID":"-47",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Referral Note",
+            "EntryCode":"16",
+            "ID":"16",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Referral Results",
+            "EntryCode":"-48",
+            "ID":"-48",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Refill Clinic Note",
+            "EntryCode":"17",
+            "ID":"17",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Release From Care",
+            "EntryCode":"-49",
+            "ID":"-49",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Release from School Letter",
+            "EntryCode":"18",
+            "ID":"18",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Release from Work Letter",
+            "EntryCode":"19",
+            "ID":"19",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Report Task Note",
+            "EntryCode":"30",
+            "ID":"30",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Reports",
+            "EntryCode":"-50",
+            "ID":"-50",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Scheduled Report",
+            "EntryCode":"-51",
+            "ID":"-51",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Social Service Note",
+            "EntryCode":"20",
+            "ID":"20",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Social Services",
+            "EntryCode":"-52",
+            "ID":"-52",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Social Services Agency",
+            "EntryCode":"-53",
+            "ID":"-53",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Speciality Service Note",
+            "EntryCode":"21",
+            "ID":"21",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Staying Healthy Assessment Report",
+            "EntryCode":"-100",
+            "ID":"-100",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Supply, Medical",
+            "EntryCode":"-99",
+            "ID":"-99",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Transition of Care",
+            "EntryCode":"39",
+            "ID":"39",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Utilization Review Note",
+            "EntryCode":"22",
+            "ID":"22",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Vaccination Report",
+            "EntryCode":"-54",
+            "ID":"-54",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"verbal order",
+            "EntryCode":"-57",
+            "ID":"-57",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Vital Sign",
+            "EntryCode":"-55",
+            "ID":"-55",
+            "DocumentFormat":""
+         },
+         {  
+            "DisplayName":"Web Portal Form",
+            "EntryCode":"99",
+            "ID":"99",
+            "DocumentFormat":""
+         }
+      ]
+   }
+]
