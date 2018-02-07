@@ -189,7 +189,6 @@ function getCategory(filePath) {
 	for (var i = 0; i < categories.length; i++) {
 		for (var j = 0; j < categories[i].values.length; j++) {
 			if (hasMatch(categories[i].values[j], text)) {
-				WScript.echo("Matched " + categories[i].values[j] + " for " + categories[i].key);
 				return categories[i];
 			}
 		}

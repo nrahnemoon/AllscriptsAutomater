@@ -40,6 +40,11 @@ currPatient.firstName = "farah  duplicate";
 currPatient.lastName = "el moudari duplicate";
 blacklist.push(currPatient);
 
+var currPatient = {};
+currPatient.firstName = "than";
+currPatient.lastName = "aye";
+blacklist.push(currPatient);
+
 function isBlacklisted(patient) {
 	for (var i = 0; i < blacklist.length; i++) {
 		if (patient.firstName.toLowerCase() == blacklist[i].firstName && patient.lastName.toLowerCase() == blacklist[i].lastName)

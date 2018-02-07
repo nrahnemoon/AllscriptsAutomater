@@ -5,6 +5,7 @@ var toProcessFolder = WScript.arguments(3);
 var noMatchFolder = WScript.arguments(4);
 var multipleMatchFolder = WScript.arguments(5);
 var uploadedFolder = WScript.arguments(6);
+var upload = (WScript.arguments(7).toLowerCase() == "true");
 
 js = (new ActiveXObject("Scripting.FileSystemObject")).OpenTextFile("getToken.js", 1).ReadAll();
 eval(js);
@@ -59,12 +60,14 @@ for(var objEnum = new Enumerator(fileCollection); !objEnum.atEnd(); objEnum.move
 		if (matches.length == 1) {
 			category = getCategory(txtFileName);
 			WScript.echo("Uploading " + pdfFileName + " for " + matches[0].firstName + " " + matches[0].lastName + " with category " + category.key + " (" + category.id + ")");
-			var subject = "[" + matches[0].firstName + " " + matches[0].lastName + "] " + category.key + " " + (new Date()).getTime();
-			// uploadPdf(filename, matches[0].id, subject, category.id, token)
+			var subject = "[" + matches[0].firstName + " " + matches[0].lastName + "] " + category.key + " " + ((new Date()).getMonth() + 1) + "-" + (new Date()).getDate() + "-" + (new Date()).getFullYear();
+			var newFileName = matches[0].firstName + "_" + matches[0].lastName + "_" + matches[0].id + "(" + matches[0].month2 + "-" + matches[0].day2 + "-" + matches[0].year1 + ")(" + category.key + "_" + category.id + ")(" + (new Date()).getTime() + " " + ((new Date()).getMonth() + 1) + "-" + (new Date()).getDate() + "-" + (new Date()).getFullYear() + ")";
 
-			var newFileName = matches[0].firstName + "_" + matches[0].lastName + "_" + matches[0].id + "(" + matches[0].month2 + "-" + matches[0].day2 + "-" + matches[0].year1 + ")(" + category.key + "_" + category.id + ")(" + (new Date()).getTime() + ")";
 			fso.MoveFile(txtFileName, uploadedFolder + "\\" + newFileName + ".txt") ;
 			fso.MoveFile(pdfFileName, uploadedFolder + "\\" + newFileName + ".pdf");
+
+			if (upload)
+				uploadPdf(uploadedFolder + "\\" + newFileName + ".pdf", matches[0].id, subject, category.id, token);
 		} else if (matches.length == 0) {
 			WScript.echo(matches.length + " matches.  Won't upload.");
 			fso.MoveFile(txtFileName, noMatchFolder + "\\" + fileName + ".txt");

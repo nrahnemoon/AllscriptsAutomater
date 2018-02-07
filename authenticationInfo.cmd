@@ -1,4 +1,4 @@
 @echo off
 
 set username="jeff.paarsa"
-set password="INSERT_PASSWORD"
+set password="INSERT PASSWORD HERE"

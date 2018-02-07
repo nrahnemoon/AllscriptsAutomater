@@ -64,6 +64,7 @@ function fuzzySearch(token, csvPath, filePath) {
 				if (lastNameIndex != -1) {
 					if (canBeSoftMatch(patient) && !isBlacklisted(patient)) {
 						softMatches.push(patient);
+						WScript.Echo("Soft Match'ed " + patient.firstName + " " + patient.lastName);
 					}
 					while (true) {
 						var yearIndex = textCopy.indexOf(patient.year1);
@@ -107,7 +108,7 @@ function fuzzySearch(token, csvPath, filePath) {
 
 						if (day1Index != -1 || day2Index != -1) {
 							if (!isBlacklisted(patient)) {
-								WScript.Echo("Matched " + patient.firstName + " " + patient.lastName + " " + patient.id + " with birthday ****************************************************************************!");
+								WScript.Echo("Hard Match'ed " + patient.firstName + " " + patient.lastName);
 								hardMatches.push(patient);
 								break;
 							}
@@ -130,15 +131,11 @@ function fuzzySearch(token, csvPath, filePath) {
 function canBeSoftMatch(patient) {
 	name = getMatchingNames(patient.firstName).join("")
 	name += getMatchingNames(patient.lastName).join("")
-	WScript.Echo("Patient = " + patient.firstName + " " + patient.lastName);
-	if (name.length > 7) {
-		WScript.Echo("can be Soft match!");
+
+	if (name.length > 7)
 		return true;
-	}
-	else {
-		WScript.Echo("can't be soft match!");
+	else
 		return false;
-	}
 }
 
 function getMatchingNames(name) {
