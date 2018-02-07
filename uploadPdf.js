@@ -70,7 +70,7 @@ function uploadPdf(filename, patientID, subject, docType, token) {
 	data += "<item name=\\\"ahsEncounterID\\\" value=\\\"0\\\"/>\\n  ";
 	data += "<item name=\\\"ownerCode\\\" value=\\\"10040\\\"/>\\n  ";
 	data += "<item name=\\\"organizationName\\\" value=\\\"Professional\\\"/>\\n  ";
-	data += "<item name=\\\"attachsubject\\\" value=\\\"" + "This is my subject." + "\\\"/>\\n   ";
+	data += "<item name=\\\"attachsubject\\\" value=\\\"" + subject + "\\\"/>\\n   ";
 	data += "<item name=\\\"patientFirstName\\\" value=\\\"\\\"/>\\n  ";
 	data += "<item name=\\\"patientLastName\\\" value=\\\"\\\"/>\\n</doc>\\n\",";
 	data += "\"Parameter2\":\"\",\"Parameter3\":\"\",\"Parameter4\":\"\",\"Parameter5\":\"\",";
