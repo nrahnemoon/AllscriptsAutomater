@@ -11,7 +11,15 @@ function postData(url, data, description) {
 	request.setRequestHeader("Accept", "application/json");
 	request.setRequestHeader("Accept-Language", "en-us");
 
-	request.send(data);
+	var requestCompleted = false;
+	while (!requestCompleted) {
+		try {
+			request.send(data);
+			requestCompleted = true;
+		} catch (exception) {
+			WScript.echo("Error getting patient file for " + line[1] + " " + line[2] + ".  Trying again.");
+		}
+	}
 
 	if (request.status != 200) {
 		WScript.Echo(request.responseText + "\n\n\n");
@@ -73,5 +81,5 @@ function formatName(name) {
 	for (var i = 0; i < names.length; i++) {
 		formattedNames.push(names[i].charAt(0).toUpperCase() + names[i].slice(1).toLowerCase());
 	}
-    return formattedNames.join(" ");
+    return formattedNames.join(" ").replace(/,/g , " ");
 }

@@ -58,28 +58,60 @@ function getPatientsForWellness(token, csvPath, csvOutputPath) {
 			var data = "{\"Action\":\"GetPatientSections\",";
 			data += "\"AppUserID\":\"jeff.paarsa\",";
 			data += "\"Appname\":\"RemotePlusPro\",";
-			data += "\"PatientID\":" + 9276; // + line[0];
+			data += "\"PatientID\":" + line[0];  // + 9276;  for testing
 			data += ",\"Token\":\"" + token;
-			data += "\",\"Parameter1\":\"48\",";
+			data += "\",\"Parameter1\":\"48\","; // Records for past 4 years
 			data += "\"Parameter2\":\"\",\"Parameter3\":\"\",\"Parameter4\":\"\",\"Parameter5\":\"\",";
 			data += "\"Parameter6\":\"\",\"Data\":\"\"}";
-			var request = postData(url, data, "getting patient sections");
 
-			//WScript.echo(request.responseText);
+			var requestCompleted = false;
+			while (!requestCompleted) {
+				try {
+					var request = postData(url, data, "getting patient sections");
+					requestCompleted = true;
+				} catch (exception) {
+					WScript.echo("Error getting patient file for " + line[1] + " " + line[2] + ".  Trying again.");
+				}
+			}
+
+			WScript.echo(request.responseText);
 			if (request.status != 200)
 				throw "";
 
 			eval('jsonResponse = ' + request.responseText);
 			var encounters = jsonResponse[0].getpatientsectionsinfo
+			var latestEncounter = 0;
 			for (var i = 0; i < encounters.length; i++) {
-				//WScript.echo("[" + encounters[i].Section + "] " + encounters[i].Description);
-				if (encounters[i].Section.indexOf("Other Past History") != -1 && encounters[i].Section.indexOf("Well adult exam") != -1) {
+				// WScript.echo("[" + encounters[i].Section + "] " + encounters[i].Description);
+				if (encounters[i].Section.indexOf("Other Past History") != -1 && encounters[i].Description.toLowerCase().indexOf("well") != -1 && encounters[i].Description.toLowerCase().indexOf("exam") != -1) {
+					dateArr = encounters[i].Date.split("-");
+					date = new Date(dateArr[1] + " " + dateArr[0] + ", " + dateArr[2]);
 					WScript.Echo("[" + line[1] + " " + line[2] + " " + encounters[i].Date + "] " + encounters[i].Description);
-					fhOutput.WriteLine(lineText);
+					WScript.Echo("encounters[" + i + "].Date = " + date);
+					WScript.Echo("latestEncounter = " + latestEncounter);
+					if (date > latestEncounter) {
+						WScript.Echo("latestEncounter = " + latestEncounter);
+						latestEncounter = date;
+					}
 				}
+			}
+			if (latestEncounter != 0) {
+				fhOutput.WriteLine(lineText + "," + formatDate(latestEncounter));
 			}
 		}
 	}
 	fhOutput.close();
 	is.Close();
+}
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
 }

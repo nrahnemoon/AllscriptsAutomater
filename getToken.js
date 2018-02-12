@@ -10,6 +10,7 @@ function getToken(username, password) {
 	var url = "https://prowand.allscriptscloud.com:5006/UnityService.svc/json/GetToken";
 	var data = "{\"Password\":\"3E434127-A1F8-4F45-9A1C-9ACF3B16399A\",";
 	data += "\"Username\":\"72088:emrRemote\"}";
+
 	request = postData(url, data, "getting the token");
 
 	if (request.status != 200)
