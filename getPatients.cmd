@@ -2,8 +2,9 @@
 
 call authenticationInfo.cmd
 
-::set mainFolder=C:\Users\JeffB\Desktop\AllscriptsAutomater
-set mainFolder=C:\Users\nrahn\Desktop\AllscriptsAutomater
+:: Sets %mainFolder% variable
+call globalVars.cmd
+
 set patientCSV=%mainFolder%\PatientDocs\patients.csv
 
 cscript getPatients.js "getPatients" %patientCSV% %username% %password%

@@ -2,8 +2,9 @@
 
 call authenticationInfo.cmd
 
-::set mainFolder=C:\Users\JeffB\Desktop\AllscriptsAutomater
-set mainFolder=C:\Users\nrahn\Desktop\AllscriptsAutomater
+:: Sets %mainFolder% variable
+call globalVars.cmd
+
 set csvPath=%mainFolder%\PatientDocs\patients.csv
 set csvOutPath=%mainFolder%\PatientDocs\patientsForWellness.csv
 

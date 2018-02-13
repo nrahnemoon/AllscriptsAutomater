@@ -25,6 +25,7 @@ function getPatients(token, csvPath) {
 	var lastPatientId;
 	var fso  = new ActiveXObject("Scripting.FileSystemObject"); 
 
+	patients = [];
 	if (fileExists(csvPath)) {
 
 		fh = fso.GetFile(csvPath);
@@ -32,7 +33,18 @@ function getPatients(token, csvPath) {
 
 		var line;
 		while(!is.AtEndOfStream) {
-		   line = is.ReadLine();
+			line = is.ReadLine();
+			lineArr = line.split(',');
+			patient = {};
+			patient.id = parseInt(lineArr[0]);
+			patient.firstName = lineArr[1];
+			patient.lastName = lineArr[2];
+			patient.birthDay = lineArr[3];
+			patient.birthMonth = lineArr[4];
+			patient.birthYear = lineArr[5];
+			patient.phoneNumber = lineArr[6];
+			patient.email = lineArr[7];
+			patients[patient.id] = patient;
 		}
 
 		lastPatientID = parseInt(line.split(',')[0]) + 1;
@@ -72,16 +84,25 @@ function getPatients(token, csvPath) {
 			continue;
 		}
 
+		patient = {};
+		patient.id = lastPatientID;
 		dateArr = patientInfo.dateofbirth.split("-");
 		date = new Date(dateArr[1] + " " + dateArr[0] + ", " + dateArr[2]);
-		day = parseInt(dateArr[0], 10);
-		month = date.getMonth() + 1;
-		year = date.getFullYear();
-		WScript.Echo("Writing = " + lastPatientID + " " + formatName(patientInfo.Firstname) + " " + formatName(patientInfo.LastName) + " " + day + " " + month + " " + year + " " + patientInfo.dateofbirth);
+		patient.birthDay = parseInt(dateArr[0], 10);
+		patient.birthMonth = date.getMonth() + 1;
+		patient.birthYear = date.getFullYear();
+		patient.firstName = formatName(patientInfo.Firstname);
+		patient.lastName = formatName(patientInfo.LastName);
+		patient.phoneNumber = patientInfo.PhoneNumber;
+		patient.email = patientInfo.Email;
+		patients[patient.id] = patient;
 
-		fh.WriteLine(lastPatientID + "," + formatName(patientInfo.Firstname) + "," + formatName(patientInfo.LastName) + "," + day + "," + month + "," + year + "," + patientInfo.PhoneNumber + "," + patientInfo.Email);
+		WScript.Echo("Writing = " + patient.id + " " + patient.firstName + " " + patient.lastName + " " + patient.birthDay + " " + patient.birthMonth + " " + patient.birthYear + " " + patientInfo.dateofbirth);
+
+		fh.WriteLine(patient.id + "," + patient.firstName + "," + patient.lastName + "," + patient.birthDay + "," + patient.birthMonth + "," + patient.birthYear + "," + patient.phoneNumber + "," + patient.email);
 		numBadInRow = 0;
 		lastPatientID++;
 	}
 	fh.close();
+	return patients;
 }
