@@ -76,13 +76,13 @@ function getPatients(token, csvPath) {
 			throw "";
 
 		eval('jsonResponse = ' + request.responseText);
-		var patientInfo = jsonResponse[0].getpatientinfo[0];
 		
-		if (jsonResponse[0].getpatientinfo.length == 0) {
+		if (jsonResponse[0].hasOwnProperty("Error") || jsonResponse[0].getpatientinfo.length == 0) {
 			numBadInRow++;
 			lastPatientID++;
 			continue;
 		}
+		var patientInfo = jsonResponse[0].getpatientinfo[0];
 
 		patient = {};
 		patient.id = lastPatientID;
